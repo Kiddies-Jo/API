@@ -1,1 +1,3 @@
-./kiddies-env
+/kiddies-env
+.idea
+__pycache__
