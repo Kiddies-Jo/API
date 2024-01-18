@@ -16,3 +16,15 @@ class UserCreate(BaseModel):
 class EmailAndPassword(BaseModel):
     email: str
     password: str
+
+
+class ItemUserSelectorCreate(BaseModel):
+    color: str
+    number_of_items: int
+
+
+class ItemCreate(BaseModel):
+    name: str
+    image_or_video: str
+    description: str
+    price: float

@@ -1,6 +1,7 @@
 # app/models/user.py
-from sqlalchemy import Boolean, Column, Integer, String, DateTime
+from sqlalchemy import Boolean, Column, Integer, String, DateTime, ForeignKey
 from database import Base
+
 
 
 class User(Base):
@@ -15,3 +16,4 @@ class User(Base):
     cities = Column(String, nullable=False)
     address_location = Column(String, nullable=False)
     is_suspended = Column(Boolean, default=False)
+    role = Column(Integer, ForeignKey('roles.id'))
