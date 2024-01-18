@@ -19,5 +19,5 @@ class UserServices:
     async def check_exist_user(self, email: str, password: str):
         user = await self.repo.check_by_email_and_password(email=email, password=password)
         if not user:
-            raise HTTPException(status_code=400, detail="Invalid Credentials")
-        return user
+            return False
+        return True

@@ -11,3 +11,8 @@ class UserCreate(BaseModel):
     date_of_birth: datetime
     cities: str
     address_location: str
+
+
+class EmailAndPassword(BaseModel):
+    email: str
+    password: str

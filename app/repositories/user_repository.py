@@ -22,6 +22,6 @@ class UserRepository:
         return db_user
 
     def check_by_email_and_password(self, email: str, password: str):
-        user: User = self.db.query(User).filter(User.email == email).first()
+        user: User = self.get_user_by_email(email)
         hashed_password = bcrypt.checkpw(password, user.hashed_password)
-        return user if hashed_password else None
+        return user if hashed_password and user else None
