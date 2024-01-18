@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends
 
 from app.dependencies.authentication import get_current_user
-from app.routes import users_route, items_route
+from app.routes import users_route, items_route, item_selections_route
 from database import JWT_SECRET_KEY, ALGORITHM
 
 app = FastAPI()
@@ -15,3 +15,4 @@ app.dependency_overrides = {
 
 app.include_router(users_route.router, prefix="/users", tags=["users"])
 app.include_router(items_route.router, prefix="/items", tags=["items"])
+app.include_router(item_selections_route.router, prefix="/item/selection", tags=["selections"])

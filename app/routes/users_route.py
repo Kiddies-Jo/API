@@ -11,7 +11,7 @@ router = APIRouter()
 
 
 @router.post('/register', response_model=dict)
-def register(user: UserCreate, db: Session = Depends(get_db)):
+async def register(user: UserCreate, db: Session = Depends(get_db)):
     """
     :param user:  UserCreate
     :param db: Kiddies Database MYSQL
@@ -20,12 +20,12 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
     user_services = UserServices(UserRepository(db))
 
     # Check if the user already exists
-    existing_user = user_services.repo.get_user_by_email(user.email)
+    existing_user = await user_services.repo.get_user_by_email(user.email)
     if existing_user:
         raise HTTPException(status_code=400, detail="User already exists")
 
     # Create a new user
-    new_user: UserCreate = user_services.create_user(user)
+    new_user: UserCreate = await user_services.create_user(user)
     if not new_user:
         raise HTTPException(status_code=500, detail="Failed to create user")
 
@@ -39,14 +39,14 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
 
 
 @router.post("/login", response_model=dict)
-def login(data: EmailAndPassword, db: Session = Depends(get_db)):
+async def login(data: EmailAndPassword, db: Session = Depends(get_db)):
     """
     :param data: EmailAndPassword
     :param db: Kiddies Database
     :return: JSON
     """
     user_services = UserServices(UserRepository(db))
-    is_valid_credential_user = user_services.check_exist_user(data.email, data.password)
+    is_valid_credential_user = await user_services.check_exist_user(data.email, data.password)
     if is_valid_credential_user:
         user: UserCreate = user_services.get_user_by_email(data.email)
         jwt_security_service = JWTSecurity()

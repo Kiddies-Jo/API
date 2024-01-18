@@ -21,6 +21,8 @@ class EmailAndPassword(BaseModel):
 class ItemUserSelectorCreate(BaseModel):
     color: str
     number_of_items: int
+    item_id: int
+    user_id: int
 
 
 class ItemCreate(BaseModel):

@@ -9,7 +9,7 @@ router = APIRouter()
 
 
 @router.post('/', response_model=dict)
-def create_item(item: ItemCreate, db: Session = Depends(get_db)):
+async def create_item(item: ItemCreate, db: Session = Depends(get_db)):
     """
     This view for admin role to create a new item which need to display in the application
     :param item: ItemCreate
@@ -17,12 +17,12 @@ def create_item(item: ItemCreate, db: Session = Depends(get_db)):
     :return: JSON
     """
     item_service = ItemServices(ItemRepository(db))
-    item_service.create_item(item)
-    return {"message": 'Item Created Successfully'}
+    result = await item_service.create_item(item)
+    return {"result": result}
 
 
 @router.get("/{page_number}")
-def get_items(page_number: int = 1, db: Session = Depends(get_db)):
+async def get_items(page_number: int = 1, db: Session = Depends(get_db)):
     """
     this view for customer role used to return all items
     9 items per page
@@ -31,19 +31,19 @@ def get_items(page_number: int = 1, db: Session = Depends(get_db)):
     :return: List[Items]
     """
     item_service = ItemServices(ItemRepository(db))
-    items = item_service.get_items(page_number)
+    items = await item_service.get_items(page_number)
     return {'items': items}
 
 
 @router.put("/{item_id}")
-def suspended_item(item_id: int, db: Session = Depends(get_db)):
+async def suspended_item(item_id: int, db: Session = Depends(get_db)):
     """
-    :param item_id:
-    :param db:
-    :return:
+    :param item_id: Integer
+    :param db: Kiddies Database
+    :return: Dict
     """
     item_service = ItemServices(ItemRepository(db))
-    is_suspended = item_service.suspended_item(item_id)
+    is_suspended = await item_service.suspended_item(item_id)
     if is_suspended:
         return {"message": "Suspended Successfully"}
     else:

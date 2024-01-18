@@ -6,7 +6,7 @@ from database import JWT_SECRET_KEY, ALGORITHM
 
 class JWTSecurity:
     def __init__(self):
-        TOKEN_EXPIRATION = timedelta(hours=2)
+        self.TOKEN_EXPIRATION = timedelta(hours=2)
 
     def create_jwt_token(self, data: dict) -> str:
         expiration_datetime = datetime.utcnow() + self.TOKEN_EXPIRATION

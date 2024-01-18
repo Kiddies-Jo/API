@@ -5,10 +5,6 @@ from app.models.models import ItemCreate
 from sqlalchemy.orm.exc import NoResultFound
 
 
-class ItemNotFoundException(Exception):
-    pass
-
-
 class ItemRepository:
     def __init__(self, db: Session):
         self.db = db
